@@ -1,0 +1,2 @@
+Skrypt wyświetla zawartość zadanego pliku tesktowego modyfikując go tak, aby każde zdanie było w osobnej jednej lini.
+Zdanie - co najmniej 2 wyrazy, kończy się '.','!','?' 

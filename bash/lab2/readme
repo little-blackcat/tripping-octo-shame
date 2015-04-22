@@ -1,0 +1,2 @@
+Program sprawdza, czy pliki w zadanym Katalogu1 są dowiązaniami symbolicznymi plików w zadanym Katalogu2.
+Jeśli tak, wyświetla je. 

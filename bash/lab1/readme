@@ -1,0 +1,3 @@
+Zmiana nazw wszystkich plików w zadanym katalogu (parametr wywołania skryptu), do
+których mamy ustawione prawo zapisu, przez dopisanie dodatkowego członu .old. Wcześniej
+należy skasować wszystkie pliki, które już mają takie rozszerzenie.
