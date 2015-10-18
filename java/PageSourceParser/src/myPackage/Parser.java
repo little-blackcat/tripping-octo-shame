@@ -1,13 +1,9 @@
 package myPackage;
-import sun.nio.ch.IOUtil;
 
-import java.io.*;
-import java.net.URLConnection;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.ArrayList;
 import java.io.IOException;
-import java.net.URL;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
@@ -16,69 +12,68 @@ import java.net.URL;
 
 public class Parser
 {
-    public static String readFile(File fin) throws IOException
-    {
-        FileInputStream fis = new FileInputStream(fin);
-        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-        StringBuilder myFile = new StringBuilder();
-
-        String line = null;
-        while ((line = br.readLine()) != null){
-            myFile.append(line +"\n");
-        }
-        String allFile = myFile.toString();
-        br.close();
-        return allFile;
-    }
-
-    public static ArrayList<String> regExHref(String myString)
-    {
-        Pattern pattern = Pattern.compile("<a href=\"(.*?)\".*>");
-        Matcher matcher = pattern.matcher(myString);
-        ArrayList<String> links = new ArrayList<>();
-
-        while(matcher.find()){
-            links.add(matcher.group(1));
-        }
-        return links;
-    }
 
     public static void main(String[] args) throws IOException
     {
-        String myHTML = null;
-        String myWWW = "http://pgs-soft.com";
-        int zmPom = 2;
-        if (zmPom == 1)
-        {
-            String htmlPath = ("C:\\Users\\Paula\\Desktop\\plik.html");
-            File fin = new File(htmlPath);
-            myHTML = readFile(fin);
-        }
-        else if (zmPom == 2)
-        {
-            String htmlAddress = myWWW;
-            URL userPage = new URL(htmlAddress);
-            URLConnection yc = userPage.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    yc.getInputStream(), "UTF-8"));
-            String inputLine;
-            StringBuilder a = new StringBuilder();
-            while ((inputLine = in.readLine()) != null)
-                a.append(inputLine +"\n");
-            in.close();
+        AbstractReader r;
 
-            myHTML = a.toString();
+        java.io.FileReader frconfig = new java.io.FileReader("config.txt");
+        Scanner config = new Scanner(frconfig);
+
+        // url czy file?
+        String fPath = config.nextLine();
+        if (fPath.startsWith("http") || fPath.startsWith("www."))
+        {
+            r = new WebPageReader(fPath);
+        } else
+        {
+            r = new FileReader(fPath);
         }
 
-        System.out.println(myHTML);                     //wypisywanie calej zawartosci wczytanego xrodla
-        System.out.println(regExHref(myHTML));          //wypisanie arraylisty z linkami
 
-        System.out.println("--------- wyswietlanie z danej domeny --------");
-        ArrayList<String> astring = regExHref(myHTML);
-        for(String url : astring)
+        ArrayList<String> linki = r.Parse(r.fileToString());
+        ArrayList<String> linksFromDomain = r.ParseFromDomain(r.fileToString());
+
+        // wyswietl ilosc linkow
+        System.out.println("Znaleziono w sumie " + linki.size() + " linkow.");
+
+        // wyswietlic wszystkie?
+        String czyWszystkie = config.nextLine();
+        if (czyWszystkie.equals("tak"))
         {
-                if(url.startsWith("/") || url.startsWith(myWWW))
-                    System.out.println(url);
+            System.out.println("Wszystkie linki: ");
+            for (int q = 0; q < linki.size(); ++q)
+            {
+                System.out.println(q + ": " + linki.get(q));
+            }
+        } else // nie - tylko te z domeny
+        {
+            System.out.println("Linki z aktualnej domeny: ");
+            for (int q = 0; q < linksFromDomain.size(); ++q)
+            {
+                System.out.println(q + ": " + linksFromDomain.get(q));
+            }
+        }
+
+        // czy wyswietlic zrodlo strony?
+        String czyZrodlo = config.nextLine();
+        if (czyZrodlo.equals("tak"))
+        {
+            Integer number = config.nextInt();
+            String link = new String();
+            if(czyWszystkie.equals("tak")) // linki z domeny
+            {
+                link = linki.get(number);
+            }
+            else
+            {
+                link = linksFromDomain.get(number);
+            }
+
+            // wyswietlenie zrodla strony
+            System.out.println("Zrodlo " + link + ": ");
+            System.out.println(r.fileToString(link));
+
         }
 
     }
