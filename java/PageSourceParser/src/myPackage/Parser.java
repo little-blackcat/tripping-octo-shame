@@ -1,7 +1,6 @@
 package myPackage;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,7 +14,7 @@ public class Parser
 
     public static void main(String[] args) throws IOException
     {
-        AbstractReader r;
+        AbstractReader reader;
 
         java.io.FileReader frconfig = new java.io.FileReader("config.txt");
         Scanner config = new Scanner(frconfig);
@@ -24,55 +23,55 @@ public class Parser
         String fPath = config.nextLine();
         if (fPath.startsWith("http") || fPath.startsWith("www."))
         {
-            r = new WebPageReader(fPath);
+            reader = new WebPageReader(fPath);
         } else
         {
-            r = new FileReader(fPath);
+            reader = new FileReader(fPath);
         }
 
 
-        ArrayList<String> linki = r.Parse(r.fileToString());
-        ArrayList<String> linksFromDomain = r.ParseFromDomain(r.fileToString());
+        ArrayList<String> allLinks = reader.Parse(reader.fileToString());
+        ArrayList<String> linksFromCurrentDomain = reader.ParseFromDomain(reader.fileToString());
 
         // wyswietl ilosc linkow
-        System.out.println("Znaleziono w sumie " + linki.size() + " linkow.");
+        System.out.println("Znaleziono w sumie " + allLinks.size() + " linkow.");
 
         // wyswietlic wszystkie?
-        String czyWszystkie = config.nextLine();
-        if (czyWszystkie.equals("tak"))
+        String ifAll = config.nextLine();
+        if (ifAll.equals("tak"))
         {
             System.out.println("Wszystkie linki: ");
-            for (int q = 0; q < linki.size(); ++q)
+            for (int currentLink = 0; currentLink < allLinks.size(); ++currentLink)
             {
-                System.out.println(q + ": " + linki.get(q));
+                System.out.println(currentLink + ": " + allLinks.get(currentLink));
             }
         } else // nie - tylko te z domeny
         {
             System.out.println("Linki z aktualnej domeny: ");
-            for (int q = 0; q < linksFromDomain.size(); ++q)
+            for (int currentLink = 0; currentLink < linksFromCurrentDomain.size(); ++currentLink)
             {
-                System.out.println(q + ": " + linksFromDomain.get(q));
+                System.out.println(currentLink + ": " + linksFromCurrentDomain.get(currentLink));
             }
         }
 
         // czy wyswietlic zrodlo strony?
-        String czyZrodlo = config.nextLine();
-        if (czyZrodlo.equals("tak"))
+        String ifSource = config.nextLine();
+        if (ifSource.equals("tak"))
         {
             Integer number = config.nextInt();
-            String link = new String();
-            if(czyWszystkie.equals("tak")) // linki z domeny
+            String link;
+            if(ifAll.equals("tak")) // linki z domeny
             {
-                link = linki.get(number);
+                link = allLinks.get(number);
             }
             else
             {
-                link = linksFromDomain.get(number);
+                link = linksFromCurrentDomain.get(number);
             }
 
             // wyswietlenie zrodla strony
             System.out.println("Zrodlo " + link + ": ");
-            System.out.println(r.fileToString(link));
+            System.out.println(reader.fileToString(link));
 
         }
 
