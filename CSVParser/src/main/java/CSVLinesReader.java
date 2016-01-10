@@ -11,13 +11,9 @@ public class CSVLinesReader {
     Scanner sc;
     String errorFileName;
 
-    public CSVLinesReader(String fn, String efn){
+    public CSVLinesReader(String fn, String efn) throws FileNotFoundException {
         File file = new File(fn);
-        try{
         this.sc = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Nie znaleziono pliku o takiej nazwie!");
-        }
         this.errorFileName = efn;
     }
 

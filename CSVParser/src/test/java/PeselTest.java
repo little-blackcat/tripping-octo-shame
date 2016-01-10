@@ -18,4 +18,9 @@ public class PeselTest {
     public void testAgeCaculator() {
         assertEquals(31, pesel.ageCalculator());
     }
+
+    @org.junit.Test
+    public void testPeselLength() {
+        assertEquals(11, pesel.wholePesel.length());
+    }
 }

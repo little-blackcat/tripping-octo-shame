@@ -11,7 +11,7 @@ public class SmallerFilesCreator {
     int numberOfFiles;
     ArrayList<Person> listToSplit;
 
-    public SmallerFilesCreator(int sizeOfSmallFile, ArrayList<Person> list, String filename) throws IOException {
+    public SmallerFilesCreator(int sizeOfSmallFile, ArrayList<Person> list, String filename) {
         this.nameOfFiles = filename;
         this.fileSize = sizeOfSmallFile;
         this.listToSplit = list;
