@@ -2,4 +2,6 @@
 *.project
 *.prefs
 *.class
-.idea/*
+CSVParser/.idea/
+CSVParser/target/
+CSVParser/CSVGenerator/.idea/

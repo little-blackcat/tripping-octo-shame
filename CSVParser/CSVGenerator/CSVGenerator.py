@@ -17,7 +17,7 @@ def getPesel():
     pesel = '{0:02d}{1:02d}{2:02d}{3}'.format(peselYear, peselMonth, peselDay, peselRest)
     return pesel
 
-csv.register_dialect('semicolon', delimiter=';')
+csv.register_dialect('semicolon', delimiter=';', lineterminator='\n')
 
 f = open('myData.csv', 'wt')
 
