@@ -1,0 +1,5 @@
+1 0 0
+2. Temperatura, w ktorej zamarza woda to:
+0 stopni
+10 stopni
+-100 stopni

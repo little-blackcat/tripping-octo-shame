@@ -1,0 +1,5 @@
+0 0 1
+5. Z polaczenia jakich kolorow otrzymamy kolor zielony?
+Zolty i czerwony
+Niebieski i czerwony
+Niebieski i zolty
