@@ -5,16 +5,17 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CreatingObjectFromFile {
+public class ObjectFromFileCreator {
 
-    public ArrayList<Question> questions = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
 
-    public CreatingObjectFromFile() {}
+    //public void convertToObject() throws IOException{
 
-    public void convertToObject() throws IOException{
+    public ObjectFromFileCreator(String path) throws IOException {
         File currentFile;
-        FilesFromDirectory ffd = new FilesFromDirectory("questions");
+        FilesFromDirectory ffd = new FilesFromDirectory(path);
 
         for(int i = 0; i < ffd.listOfFiles.size(); i++){
             currentFile = ffd.listOfFiles.get(i);
@@ -24,8 +25,6 @@ public class CreatingObjectFromFile {
                 try {
                     inputStream = new BufferedReader(
                             new FileReader(currentFile));
-
-                    System.out.println(":)");
 
                     String[] iC = inputStream.readLine().split(" ");
                     String qT = inputStream.readLine();
@@ -41,4 +40,6 @@ public class CreatingObjectFromFile {
             }
         }
     }
+
+    public List<Question> getList() { return this.questions; }
 }

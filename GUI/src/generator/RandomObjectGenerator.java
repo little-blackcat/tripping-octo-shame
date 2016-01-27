@@ -1,19 +1,19 @@
 package generator;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import questions.CreatingObjectFromFile;
+import questions.ObjectFromFileCreator;
 import questions.Question;
 
 public class RandomObjectGenerator {
 
     private Random randomGenerator;
-    ArrayList<Question> questions;
+    List<Question> questions;
 
-    public RandomObjectGenerator(CreatingObjectFromFile obj)
+    public RandomObjectGenerator(ObjectFromFileCreator obj)
     {
         randomGenerator = new Random();
-        questions = obj.questions;
+        questions = obj.getList();
     }
 
     public Question getRandomQuestion()

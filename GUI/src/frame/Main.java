@@ -1,7 +1,8 @@
 package frame;
 
 import generator.RandomObjectGenerator;
-import questions.CreatingObjectFromFile;
+import questions.ObjectFromFileCreator;
+import questions.StatsService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,12 +13,15 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
+        ObjectFromFileCreator coff = new ObjectFromFileCreator("questions");
+        RandomObjectGenerator rog = new RandomObjectGenerator(coff);
+        StatsService stats = new StatsService();
 
         EventQueue.invokeLater(new Runnable() {
             public void run(){
-                SizedFrame frame = null;
+                MainFrame frame = null;
                 try {
-                    frame = new SizedFrame();
+                    frame = new MainFrame(rog, stats);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
